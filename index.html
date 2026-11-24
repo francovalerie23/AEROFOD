@@ -1,186 +1,456 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="es">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AeroFOD Panamá: biblioteca educativa sobre prevención de Foreign Object Debris, seguridad operacional y documentación aeronáutica de Panamá.">
+  <title>AeroFOD Panamá | Seguridad operacional y prevención FOD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bone:#F7F4EE; --paper:#FFFEFB; --ink:#24313D; --muted:#66717B;
+      --navy:#29465B; --blue:#DDEAF0; --sage:#DCE8E0; --sand:#ECE2D4;
+      --line:#D8DCD8; --shadow:0 16px 45px rgba(42,58,68,.08);
+      --radius:24px; --max:1180px;
+    }
+    *{box-sizing:border-box;scroll-behavior:smooth}
+    body{margin:0;background:var(--bone);color:var(--ink);font-family:"DM Sans",Arial,sans-serif;line-height:1.65}
+    a{color:inherit;text-decoration:none} button,input{font:inherit}
+    .container{width:min(var(--max),calc(100% - 40px));margin:auto}
+    .section{padding:96px 0}
+    h1,h2,h3{font-family:"Manrope",Arial,sans-serif;margin:0;line-height:1.12;color:var(--ink)}
+    h1{font-size:clamp(2.8rem,7vw,5.8rem);letter-spacing:-.055em}
+    h2{font-size:clamp(2rem,4.5vw,3.7rem);letter-spacing:-.04em}
+    h3{font-size:1.15rem}
+    .lead{font-size:clamp(1.05rem,2vw,1.25rem);color:var(--muted);max-width:720px}
+    .eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid rgba(41,70,91,.14);border-radius:999px;background:rgba(255,255,255,.55);color:var(--navy);font-size:.78rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+    .nav-wrap{position:sticky;top:0;z-index:1000;backdrop-filter:blur(18px);background:rgba(247,244,238,.9);border-bottom:1px solid rgba(41,70,91,.08)}
+    nav{min-height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+    .brand{display:flex;align-items:center;gap:11px;font-family:"Manrope";font-weight:800;color:var(--navy)}
+    .brand-mark{width:38px;height:38px;display:grid;place-items:center;border-radius:13px;background:var(--navy);color:#fff;box-shadow:0 8px 18px rgba(41,70,91,.18)}
+    .nav-links{display:flex;align-items:center;gap:26px;font-size:.92rem;font-weight:600;color:#4E5B65}
+    .nav-links a:hover{color:var(--navy)}
+    .nav-cta,.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:none;border-radius:999px;padding:13px 18px;font-weight:700;cursor:pointer;transition:.22s ease}
+    .nav-cta,.btn-primary{background:var(--navy);color:white}
+    .btn-secondary{background:rgba(255,255,255,.68);color:var(--navy);border:1px solid rgba(41,70,91,.15)}
+    .btn:hover,.nav-cta:hover{transform:translateY(-2px);box-shadow:0 10px 25px rgba(41,70,91,.14)}
+    .menu-btn{display:none;background:none;border:none;font-size:1.5rem;color:var(--navy);cursor:pointer}
+    .hero{padding:76px 0 62px;overflow:hidden}
+    .hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:50px;align-items:center}
+    .hero-copy p{margin:24px 0 28px}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:34px}
+    .trust-row{display:flex;flex-wrap:wrap;gap:10px}
+    .trust-pill{padding:9px 12px;background:rgba(255,255,255,.52);border:1px solid rgba(41,70,91,.1);border-radius:12px;font-size:.83rem;color:#56636C}
+    .hero-art{position:relative;min-height:540px}
+    .visual-card{position:absolute;inset:20px 0 0 20px;border-radius:34px;background:linear-gradient(150deg,#DBE9EF 0%,#E7E5D7 52%,#EADDD5 100%);box-shadow:var(--shadow);overflow:hidden;border:1px solid rgba(255,255,255,.72)}
+    .sky-circle{position:absolute;width:280px;height:280px;border-radius:50%;right:-60px;top:-65px;background:rgba(255,255,255,.34)}
+    .runway{position:absolute;width:58%;height:115%;left:21%;top:18%;background:#7F8A91;transform:perspective(500px) rotateX(58deg);transform-origin:top;border-radius:18px 18px 2px 2px;box-shadow:0 18px 30px rgba(0,0,0,.12)}
+    .runway:before{content:"";position:absolute;width:5px;height:78%;left:50%;top:8%;transform:translateX(-50%);background:repeating-linear-gradient(to bottom,#fff 0 28px,transparent 28px 54px);opacity:.9}
+    .runway:after{content:"18";position:absolute;top:14px;left:50%;transform:translateX(-50%) rotate(180deg);color:#fff;font:700 34px/1 "Manrope"}
+    .plane{position:absolute;left:50%;top:43%;transform:translate(-50%,-50%) rotate(-4deg);font-size:5.8rem;color:white;filter:drop-shadow(0 10px 8px rgba(0,0,0,.17))}
+    .floating{position:absolute;background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.8);box-shadow:0 16px 34px rgba(42,58,68,.12);border-radius:18px;padding:14px 16px}
+    .float-a{left:-20px;top:92px}.float-b{right:-20px;bottom:54px}.float-c{left:12px;bottom:42px}
+    .float-title{font-size:.75rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+    .float-value{font-family:"Manrope";font-weight:800;color:var(--navy);margin-top:3px}
+    .feature-strip{padding:12px 0 62px}
+    .strip-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    .strip-card{background:rgba(255,255,255,.58);border:1px solid rgba(41,70,91,.09);border-radius:18px;padding:21px;display:flex;gap:14px;align-items:flex-start}
+    .mini-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:13px;background:var(--blue);flex:0 0 auto}
+    .strip-card p{margin:4px 0 0;color:var(--muted);font-size:.9rem}
+    .section-head{display:flex;justify-content:space-between;gap:36px;align-items:flex-end;margin-bottom:42px}
+    .section-head p{max-width:560px;color:var(--muted);margin:0}
+    .definition-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .definition{padding:36px;border-radius:28px;min-height:280px;display:flex;flex-direction:column;justify-content:space-between}
+    .definition.debris{background:var(--blue)} .definition.damage{background:var(--sand)}
+    .definition strong{font-family:"Manrope";font-size:4.5rem;line-height:1;color:rgba(41,70,91,.18)}
+    .definition p{max-width:520px;color:#52616A}
+    .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .card{background:var(--paper);border:1px solid rgba(41,70,91,.09);border-radius:var(--radius);padding:26px;box-shadow:0 8px 28px rgba(42,58,68,.045);transition:.22s ease}
+    .card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+    .card-icon{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;margin-bottom:24px;font-size:1.4rem;background:var(--blue)}
+    .card:nth-child(2n) .card-icon{background:var(--sage)} .card:nth-child(3n) .card-icon{background:var(--sand)}
+    .card p{color:var(--muted);margin:10px 0 0}
+    .process{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .step{padding:26px 22px;border-radius:22px;border:1px solid rgba(41,70,91,.10);background:rgba(255,255,255,.52)}
+    .step-num{font:800 2.4rem/1 "Manrope";color:rgba(41,70,91,.18);margin-bottom:22px}
+    .step p{color:var(--muted);font-size:.92rem;margin-bottom:0}
+    .risk-layout{display:grid;grid-template-columns:.85fr 1.15fr;gap:20px}
+    .risk-panel{background:var(--navy);color:white;border-radius:30px;padding:38px;min-height:100%}
+    .risk-panel h2,.risk-panel h3{color:white}.risk-panel p{color:#D9E3E9}
+    .risk-list{display:grid;gap:12px}
+    .risk-item{padding:18px 20px;display:flex;gap:15px;align-items:flex-start;border-radius:18px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.08)}
+    .risk-item span{font-size:1.35rem}.risk-item p{margin:3px 0 0;font-size:.9rem}
+    .panama-box{background:linear-gradient(135deg,#E5EEE7,#F1E7DA);border-radius:34px;padding:42px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+    .airport-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+    .airport-pill{background:rgba(255,255,255,.7);padding:10px 13px;border-radius:12px;border:1px solid rgba(41,70,91,.09);font-weight:600;font-size:.88rem}
+    .panama-map{position:relative;min-height:330px;border-radius:26px;background:rgba(255,255,255,.42);overflow:hidden;border:1px solid rgba(255,255,255,.7)}
+    .map-shape{position:absolute;width:78%;height:32%;left:11%;top:34%;background:var(--navy);opacity:.88;transform:rotate(-9deg);clip-path:polygon(0 48%,9% 30%,22% 34%,32% 19%,46% 25%,58% 39%,72% 35%,83% 49%,100% 61%,91% 72%,76% 66%,65% 79%,50% 66%,36% 73%,24% 63%,12% 69%)}
+    .map-label{position:absolute;right:24px;bottom:22px;background:white;border-radius:14px;padding:11px 14px;font-size:.82rem;color:var(--navy);font-weight:700;box-shadow:0 8px 25px rgba(42,58,68,.10)}
+    .library-tools{display:flex;gap:12px;align-items:center;margin:0 0 24px}
+    .search{width:100%;max-width:480px;border:1px solid rgba(41,70,91,.14);background:rgba(255,255,255,.7);border-radius:999px;padding:14px 18px;outline:none;color:var(--ink)}
+    .search:focus{border-color:#8DA7B6;box-shadow:0 0 0 4px rgba(141,167,182,.12)}
+    .doc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+    .doc-card{background:var(--paper);border:1px solid rgba(41,70,91,.09);padding:22px;border-radius:20px;display:flex;justify-content:space-between;gap:18px;align-items:center;transition:.2s ease}
+    .doc-card:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
+    .doc-card small{color:#78838B;text-transform:uppercase;letter-spacing:.07em;font-weight:700}
+    .doc-card h3{margin:5px 0 6px}.doc-card p{margin:0;color:var(--muted);font-size:.88rem}
+    .doc-arrow{width:38px;height:38px;border-radius:12px;background:var(--blue);display:grid;place-items:center;flex:0 0 auto}
+    .faq-layout{display:grid;grid-template-columns:.72fr 1.28fr;gap:38px}
+    .faq-intro{position:sticky;top:110px;align-self:start}
+    .faq{border-top:1px solid var(--line)} .faq-item{border-bottom:1px solid var(--line)}
+    .faq-question{width:100%;background:none;border:none;padding:22px 0;display:flex;justify-content:space-between;align-items:center;gap:20px;text-align:left;cursor:pointer;color:var(--ink);font-weight:700}
+    .faq-answer{max-height:0;overflow:hidden;transition:max-height .28s ease;color:var(--muted)}
+    .faq-answer p{margin:0 0 22px}.faq-item.active .faq-answer{max-height:260px}
+    .faq-item.active .plus{transform:rotate(45deg)} .plus{font-size:1.35rem;transition:.2s ease}
+    .cta{padding:68px 0 100px}
+    .cta-box{background:var(--navy);border-radius:34px;padding:52px;color:white;display:flex;justify-content:space-between;gap:35px;align-items:center}
+    .cta-box h2{color:white}.cta-box p{color:#D9E2E7;max-width:650px}.cta-box .btn-secondary{background:white;border:none}
+    footer{background:#213645;color:#DCE4E8;padding:56px 0 24px}
+    .footer-grid{display:grid;grid-template-columns:1.4fr .8fr .8fr;gap:42px;margin-bottom:42px}
+    footer h3{color:white;margin-bottom:13px} footer p,footer a{color:#BFCAD1;font-size:.9rem}
+    footer a{display:block;margin:7px 0} footer a:hover{color:white}
+    .footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:22px;display:flex;justify-content:space-between;gap:20px;color:#AAB7BF;font-size:.8rem}
+    .modal{position:fixed;inset:0;z-index:2000;background:rgba(25,36,44,.52);backdrop-filter:blur(8px);display:none;place-items:center;padding:20px}
+    .modal.open{display:grid}
+    .modal-card{width:min(650px,100%);max-height:88vh;overflow:auto;background:var(--paper);border-radius:28px;padding:30px;box-shadow:0 30px 80px rgba(20,30,36,.28)}
+    .modal-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start;margin-bottom:22px}
+    .close{border:none;background:var(--blue);width:40px;height:40px;border-radius:12px;cursor:pointer;font-size:1.2rem}
+    .query-box{width:100%;border:1px solid var(--line);border-radius:16px;padding:14px 16px;background:white;margin:12px 0}
+    .query-result{padding:15px;border-radius:15px;background:var(--blue);margin-top:10px;display:none}
+    .note{margin-top:20px;font-size:.82rem;color:var(--muted);padding:14px 16px;border-radius:14px;background:#F0EEE8}
 
-<meta charset="UTF-8">
-
-<title>AeroFOD Panamá</title>
-
+    @media(max-width:900px){
+      .hero-grid,.risk-layout,.panama-box,.faq-layout{grid-template-columns:1fr}
+      .hero-art{min-height:430px}.cards{grid-template-columns:1fr 1fr}.process{grid-template-columns:1fr 1fr}
+      .strip-grid{grid-template-columns:1fr}.faq-intro{position:static}.footer-grid{grid-template-columns:1fr 1fr}
+      .nav-links{display:none;position:absolute;left:20px;right:20px;top:76px;padding:20px;flex-direction:column;align-items:flex-start;background:var(--paper);border-radius:18px;box-shadow:var(--shadow)}
+      .nav-links.open{display:flex}.menu-btn{display:block}.nav-cta{display:none}
+    }
+    @media(max-width:620px){
+      .container{width:min(100% - 26px,var(--max))}.section{padding:72px 0}.section-head{display:block}.section-head p{margin-top:16px}
+      .cards,.definition-grid,.process,.doc-grid,.footer-grid{grid-template-columns:1fr}.hero{padding-top:50px}.hero-art{min-height:350px}
+      .visual-card{inset:12px 0 0 0}.float-a{left:8px;top:45px}.float-b{right:8px;bottom:28px}.float-c{display:none}.plane{font-size:4.3rem}
+      .panama-box,.cta-box{padding:28px}.cta-box{display:block}.cta-box .btn{margin-top:12px}.footer-bottom{display:block}
+    }
+  </style>
 </head>
+<body>
 
+<header class="nav-wrap">
+  <nav class="container">
+    <a class="brand" href="#inicio"><span class="brand-mark">✈</span><span>AeroFOD Panamá</span></a>
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menú">☰</button>
+    <div class="nav-links" id="navLinks">
+      <a href="#fod">FOD</a>
+      <a href="#prevencion">Prevención</a>
+      <a href="#panama">Panamá</a>
+      <a href="#biblioteca">Biblioteca</a>
+      <a href="#consultas">Consultas</a>
+    </div>
+    <button class="nav-cta" onclick="openModal()">Dudas y consultas</button>
+  </nav>
+</header>
 
-<body style="background-color:#EAF2F8; font-family:Arial; margin:0;">
+<main>
 
+<section class="hero" id="inicio">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow">Biblioteca educativa de seguridad operacional</span>
+      <h1>Seguridad empieza por identificar el riesgo.</h1>
+      <p class="lead">Aprende a reconocer, prevenir y comprender los Foreign Object Debris (FOD) dentro del entorno aeroportuario, con recursos oficiales y una mirada enfocada en Panamá.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#fod">Explorar FOD →</a>
+        <a class="btn btn-secondary" href="#biblioteca">Abrir biblioteca</a>
+      </div>
+      <div class="trust-row">
+        <span class="trust-pill">OACI · referencia internacional</span>
+        <span class="trust-pill">AAC Panamá · normativa nacional</span>
+        <span class="trust-pill">Contenido educativo</span>
+      </div>
+    </div>
 
-<!-- ENCABEZADO -->
+    <div class="hero-art">
+      <div class="visual-card">
+        <div class="sky-circle"></div>
+        <div class="runway"></div>
+        <div class="plane">✈</div>
+      </div>
+      <div class="floating float-a"><div class="float-title">Control FOD</div><div class="float-value">Prevenir · Detectar</div></div>
+      <div class="floating float-b"><div class="float-title">Área operacional</div><div class="float-value">Pista · Rodaje · Plataforma</div></div>
+      <div class="floating float-c"><div class="float-title">Enfoque</div><div class="float-value">Panamá</div></div>
+    </div>
+  </div>
+</section>
 
-<div style="background-color:#123B5D; color:white; text-align:center; padding:30px;">
+<section class="feature-strip">
+  <div class="container strip-grid">
+    <div class="strip-card"><div class="mini-icon">◎</div><div><strong>Aprende de forma clara</strong><p>Conceptos breves, ejemplos visuales y lenguaje pensado para estudiantes.</p></div></div>
+    <div class="strip-card"><div class="mini-icon">⌁</div><div><strong>Consulta fuentes oficiales</strong><p>Acceso directo a OACI, AAC Panamá, RACP, AIP y documentación relacionada.</p></div></div>
+    <div class="strip-card"><div class="mini-icon">✓</div><div><strong>Prevención primero</strong><p>Identificar un peligro a tiempo ayuda a fortalecer la cultura de seguridad operacional.</p></div></div>
+  </div>
+</section>
 
-<h1>AeroFOD Panamá</h1>
+<section class="section" id="fod">
+  <div class="container">
+    <div class="section-head">
+      <div><span class="eyebrow">Concepto base</span><h2>¿Qué significa FOD?</h2></div>
+      <p>FOD se utiliza para hablar tanto del objeto extraño que representa un peligro como del daño que ese objeto puede producir. Comprender la diferencia ayuda a analizar mejor el riesgo.</p>
+    </div>
 
-<p>Prevención e información sobre objetos extraños en aeropuertos</p>
+    <div class="definition-grid">
+      <article class="definition debris">
+        <strong>01</strong>
+        <div><h3>Foreign Object Debris</h3><p>Objeto o residuo ubicado donde no debería estar y que puede poner en riesgo a una aeronave, una persona o un equipo. Puede aparecer en pista, calles de rodaje, plataforma o zonas de mantenimiento.</p></div>
+      </article>
+      <article class="definition damage">
+        <strong>02</strong>
+        <div><h3>Foreign Object Damage</h3><p>Daño ocasionado por un objeto extraño. Puede afectar neumáticos, motores, fuselaje, componentes o generar interrupciones y costos adicionales en las operaciones.</p></div>
+      </article>
+    </div>
+  </div>
+</section>
 
+<section class="section">
+  <div class="container">
+    <div class="section-head">
+      <div><span class="eyebrow">Identificación</span><h2>Objetos que pueden convertirse en FOD</h2></div>
+      <p>No existe un único tipo de FOD. El riesgo depende del objeto, su ubicación, el movimiento de las aeronaves y las condiciones del área operacional.</p>
+    </div>
+
+    <div class="cards">
+      <article class="card"><div class="card-icon">🔩</div><h3>Metales y piezas</h3><p>Tornillos, tuercas, alambres, fragmentos metálicos, sujetadores y pequeñas piezas desprendidas.</p></article>
+      <article class="card"><div class="card-icon">🧰</div><h3>Herramientas</h3><p>Llaves, destornilladores, elementos de mantenimiento o materiales olvidados después de un trabajo.</p></article>
+      <article class="card"><div class="card-icon">📦</div><h3>Residuos y embalaje</h3><p>Papel, cartón, plástico, etiquetas, envoltorios y materiales livianos que pueden desplazarse.</p></article>
+      <article class="card"><div class="card-icon">🪨</div><h3>Superficie</h3><p>Piedras, grava, fragmentos de concreto, asfalto o material desprendido de una superficie.</p></article>
+      <article class="card"><div class="card-icon">🛞</div><h3>Equipos y vehículos</h3><p>Fragmentos de caucho, piezas sueltas, componentes de equipos de rampa o elementos desprendidos.</p></article>
+      <article class="card"><div class="card-icon">🍃</div><h3>Material natural</h3><p>Ramas, hojas, piedras u otros materiales naturales cuando se encuentran en una ubicación que representa un peligro.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="prevencion">
+  <div class="container">
+    <div class="section-head">
+      <div><span class="eyebrow">Enfoque OACI</span><h2>Un programa FOD trabaja en cuatro etapas.</h2></div>
+      <p>La orientación de OACI para el control de FOD se basa en prevención, detección, remoción y evaluación, adaptadas al riesgo y a las condiciones locales del aeródromo.</p>
+    </div>
+
+    <div class="process">
+      <article class="step"><div class="step-num">01</div><h3>Prevenir</h3><p>Formación, conciencia, orden, limpieza y procedimientos para evitar que el FOD llegue al área de movimiento.</p></article>
+      <article class="step"><div class="step-num">02</div><h3>Detectar</h3><p>Inspecciones y vigilancia de pista, calles de rodaje, plataforma y otras zonas operacionales.</p></article>
+      <article class="step"><div class="step-num">03</div><h3>Retirar</h3><p>Eliminar, contener y disponer correctamente el objeto encontrado de acuerdo con los procedimientos aplicables.</p></article>
+      <article class="step"><div class="step-num">04</div><h3>Evaluar</h3><p>Registrar y analizar la información para reconocer fuentes, patrones y oportunidades de mejora.</p></article>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container risk-layout">
+    <div class="risk-panel">
+      <span class="eyebrow" style="color:white;border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.06)">Riesgos</span>
+      <h2 style="margin-top:18px">Un objeto pequeño puede generar una consecuencia grande.</h2>
+      <p>La gravedad no depende solamente del tamaño. También importa dónde se encuentra, la velocidad de la aeronave y la posibilidad de que sea proyectado o ingerido.</p>
+    </div>
+
+    <div class="risk-panel">
+      <div class="risk-list">
+        <div class="risk-item"><span>◉</span><div><h3>Motores</h3><p>Un objeto puede ser ingerido por un motor y provocar daños en componentes internos.</p></div></div>
+        <div class="risk-item"><span>◌</span><div><h3>Neumáticos y tren de aterrizaje</h3><p>Fragmentos y piezas pueden generar cortes, perforaciones o impactos.</p></div></div>
+        <div class="risk-item"><span>↗</span><div><h3>Objetos proyectados</h3><p>El jet blast, hélices o el paso de vehículos pueden desplazar FOD y convertirlo en un peligro adicional.</p></div></div>
+        <div class="risk-item"><span>△</span><div><h3>Personas y operaciones</h3><p>El FOD también puede causar lesiones, daños a equipos, inspecciones adicionales y retrasos operacionales.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="panama">
+  <div class="container">
+    <div class="panama-box">
+      <div>
+        <span class="eyebrow">Contexto nacional</span>
+        <h2 style="margin-top:18px">Aviación y seguridad operacional en Panamá.</h2>
+        <p class="lead" style="font-size:1rem">AeroFOD contextualiza la prevención dentro del sistema aeronáutico panameño. La Autoridad Aeronáutica Civil publica el RACP, el Programa Estatal de Seguridad Operacional, el AIP y otras guías que sirven como referencia oficial.</p>
+        <div class="airport-pills">
+          <span class="airport-pill">Tocumen</span>
+          <span class="airport-pill">Marcos A. Gelabert</span>
+          <span class="airport-pill">Enrique Malek</span>
+          <span class="airport-pill">Panamá Pacífico</span>
+          <span class="airport-pill">Bocas del Toro</span>
+          <span class="airport-pill">Scarlett Martínez</span>
+        </div>
+        <p style="font-size:.82rem;color:#64717A;margin-top:18px">Los aeródromos se muestran como ejemplos de consulta. Para información operacional vigente, debe revisarse siempre el AIP Panamá publicado por la AAC.</p>
+      </div>
+      <div class="panama-map"><div class="map-shape"></div><div class="map-label">Panamá · entorno aeronáutico</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="biblioteca">
+  <div class="container">
+    <div class="section-head">
+      <div><span class="eyebrow">Documentos y recursos</span><h2>Biblioteca aeronáutica</h2></div>
+      <p>Una selección de enlaces para continuar la investigación directamente en organismos oficiales y fuentes especializadas. AeroFOD resume; la fuente oficial siempre prevalece.</p>
+    </div>
+
+    <div class="library-tools">
+      <input id="docSearch" class="search" type="search" placeholder="Buscar: OACI, RACP, AIP, seguridad, leyes...">
+    </div>
+
+    <div class="doc-grid" id="docGrid">
+      <a class="doc-card" data-keywords="oaci icao fod control prevención detección remoción evaluación" href="https://www.icao.int/sites/default/files/APAC/Meetings/2020/2020%20APADOTF2/WP06%2C%20AI2%20-%20Amdt%203%20to%20PANS-Aerodromes.pdf" target="_blank" rel="noopener">
+        <div><small>OACI / ICAO</small><h3>Foreign Object Debris (FOD) Control</h3><p>Referencia internacional sobre objetivos y componentes de un programa de control FOD.</p></div><div class="doc-arrow">↗</div>
+      </a>
+
+      <a class="doc-card" data-keywords="aac panama ssp seguridad operacional programa estatal" href="https://www.aeronautica.gob.pa/gestion_de_seguridad_operacional/index.php" target="_blank" rel="noopener">
+        <div><small>AAC Panamá</small><h3>Programa Estatal de Seguridad Operacional</h3><p>Información oficial sobre el SSP de Panamá y documentación de seguridad operacional.</p></div><div class="doc-arrow">↗</div>
+      </a>
+
+      <a class="doc-card" data-keywords="racp reglamento aviación civil panama normativa" href="https://aeronautica.gob.pa/seguridad_aerea_nacional/index.php?c=seguridad_aerea_RACP" target="_blank" rel="noopener">
+        <div><small>AAC Panamá</small><h3>Reglamento de Aviación Civil de Panamá — RACP</h3><p>Acceso a los libros que componen el reglamento aeronáutico panameño.</p></div><div class="doc-arrow">↗</div>
+      </a>
+
+      <a class="doc-card" data-keywords="aip panama información aeronáutica aerodromos cartas notam ais" href="https://www.aeronautica.gob.pa/ais-aip/" target="_blank" rel="noopener">
+        <div><small>AIS / AAC Panamá</small><h3>AIP Panamá</h3><p>Publicación de Información Aeronáutica, aeródromos, procedimientos y productos AIS.</p></div><div class="doc-arrow">↗</div>
+      </a>
+
+      <a class="doc-card" data-keywords="ley leyes 21 22 23 aviación civil autoridad aeronautica aeropuertos" href="https://www.aeronautica.gob.pa/seguridad_aerea_nacional/index.php?c=seguridad_aerea_leyes" target="_blank" rel="noopener">
+        <div><small>Marco legal</small><h3>Leyes aeronáuticas de Panamá</h3><p>Incluye las Leyes 21, 22 y 23 relacionadas con aviación civil, AAC y aeropuertos.</p></div><div class="doc-arrow">↗</div>
+      </a>
+
+      <a class="doc-card" data-keywords="skybrary fod foreign object debris damage prevention educación" href="https://skybrary.aero/index.php/articles/foreign-object-debris-and-damage-prevention" target="_blank" rel="noopener">
+        <div><small>SKYbrary</small><h3>FOD: prevención y aprendizaje</h3><p>Fuente educativa especializada en seguridad operacional de la aviación.</p></div><div class="doc-arrow">↗</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="consultas">
+  <div class="container faq-layout">
+    <div class="faq-intro">
+      <span class="eyebrow">Dudas frecuentes</span>
+      <h2 style="margin-top:18px">Consulta rápida</h2>
+      <p class="lead" style="font-size:1rem">Respuestas sencillas para orientarte antes de revisar el documento oficial correspondiente.</p>
+      <button class="btn btn-primary" onclick="openModal()">Buscar una duda</button>
+    </div>
+
+    <div class="faq">
+      <div class="faq-item"><button class="faq-question">¿Todo objeto que veo en plataforma es FOD?<span class="plus">+</span></button><div class="faq-answer"><p>No necesariamente. El concepto depende de la ubicación y del peligro que el objeto representa. Un objeto fuera de lugar en un área operacional puede convertirse en FOD si amenaza la seguridad de aeronaves, personas o equipos.</p></div></div>
+      <div class="faq-item"><button class="faq-question">¿Un ave es FOD?<span class="plus">+</span></button><div class="faq-answer"><p>Las aves se gestionan normalmente dentro del peligro por fauna o wildlife hazard, no como FOD. Ambos temas forman parte de la seguridad operacional del aeródromo, pero se controlan mediante procesos diferentes.</p></div></div>
+      <div class="faq-item"><button class="faq-question">¿Quién debe retirar un FOD?<span class="plus">+</span></button><div class="faq-answer"><p>La orientación de OACI destaca que el control de FOD requiere participación de todo el personal con acceso al área de movimiento. La acción concreta siempre debe seguir los procedimientos del aeródromo y las condiciones de seguridad del momento.</p></div></div>
+      <div class="faq-item"><button class="faq-question">¿Dónde consulto las reglas oficiales de Panamá?<span class="plus">+</span></button><div class="faq-answer"><p>En la Biblioteca AeroFOD encontrarás enlaces directos a la AAC Panamá, el RACP, el AIP, leyes y el Programa Estatal de Seguridad Operacional.</p></div></div>
+      <div class="faq-item"><button class="faq-question">¿AeroFOD reemplaza un manual del aeropuerto?<span class="plus">+</span></button><div class="faq-answer"><p>No. AeroFOD es una página educativa. Para una operación real deben utilizarse los procedimientos, manuales, NOTAM, AIP y documentos oficiales vigentes aplicables a cada aeródromo y organización.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta">
+  <div class="container">
+    <div class="cta-box">
+      <div>
+        <span class="eyebrow" style="color:white;border-color:rgba(255,255,255,.16);background:rgba(255,255,255,.06)">Sigue aprendiendo</span>
+        <h2 style="margin-top:16px">Explora primero. Verifica siempre en la fuente oficial.</h2>
+        <p>AeroFOD Panamá organiza información educativa para facilitar el aprendizaje. La normativa, los procedimientos operacionales y las publicaciones vigentes deben confirmarse en OACI y AAC Panamá.</p>
+      </div>
+      <a class="btn btn-secondary" href="#biblioteca">Ver documentos →</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <div class="brand" style="color:white;margin-bottom:14px"><span class="brand-mark" style="background:white;color:var(--navy)">✈</span><span>AeroFOD Panamá</span></div>
+        <p>Proyecto educativo sobre prevención de FOD, seguridad operacional y consulta de documentación aeronáutica con enfoque en Panamá.</p>
+      </div>
+      <div><h3>Explorar</h3><a href="#fod">¿Qué es FOD?</a><a href="#prevencion">Prevención</a><a href="#panama">Panamá</a><a href="#biblioteca">Biblioteca</a></div>
+      <div><h3>Fuentes</h3><a href="https://www.icao.int/" target="_blank" rel="noopener">OACI / ICAO</a><a href="https://www.aeronautica.gob.pa/" target="_blank" rel="noopener">AAC Panamá</a><a href="https://skybrary.aero/" target="_blank" rel="noopener">SKYbrary</a></div>
+    </div>
+    <div class="footer-bottom"><span>© 2026 AeroFOD Panamá · Proyecto educativo.</span><span>La información de esta web no sustituye documentación operacional oficial.</span></div>
+  </div>
+</footer>
+
+<div class="modal" id="queryModal" onclick="modalBackdrop(event)">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div><span class="eyebrow">Consulta educativa</span><h2 style="font-size:2rem;margin-top:12px">¿Qué quieres saber?</h2></div>
+      <button class="close" onclick="closeModal()" aria-label="Cerrar">×</button>
+    </div>
+    <p style="color:var(--muted)">Escribe una palabra clave. Esta versión busca dentro de temas básicos incluidos en AeroFOD.</p>
+    <input class="query-box" id="quickQuery" placeholder="Ejemplo: FOD, ave, RACP, AIP, motor, prevención...">
+    <button class="btn btn-primary" onclick="runQuickQuery()">Consultar</button>
+    <div class="query-result" id="queryResult"></div>
+    <div class="note">Esta consulta es orientativa y funciona sin base de datos. Para información operacional, legal o normativa vigente, utiliza los enlaces de la Biblioteca y verifica la fuente oficial.</div>
+  </div>
 </div>
 
-
-<!-- INTRODUCCIÓN -->
-
-<div style="background-color:white; margin:30px; padding:25px;">
-
-<h2 style="color:#123B5D;">¿Qué es AeroFOD Panamá?</h2>
-
-<p>
-AeroFOD Panamá es una página web educativa y preventiva creada
-para informar sobre los Foreign Object Debris (FOD) que pueden
-encontrarse en las áreas operacionales de los aeropuertos de Panamá.
-</p>
-
-<p>
-El objetivo es conocer qué son estos objetos, dónde pueden aparecer,
-qué daños pueden causar y cuáles son las principales medidas para
-prevenirlos.
-</p>
-
-</div>
-
-
-<!-- QUE ES FOD -->
-
-<div style="background-color:white; margin:30px; padding:25px;">
-
-<h2 style="color:#123B5D;">¿Qué es un FOD?</h2>
-
-<p>
-Un FOD es cualquier objeto extraño que se encuentre en una pista,
-calle de rodaje, plataforma u otra zona operacional y que pueda
-representar un peligro para una aeronave, vehículo o persona.
-</p>
-
-</div>
-
-
-<!-- TIPOS DE FOD -->
-
-<div style="background-color:white; margin:30px; padding:25px;">
-
-<h2 style="color:#123B5D;">Ejemplos de FOD</h2>
-
-<table width="100%" cellpadding="15">
-
-<tr>
-
-<td align="center" bgcolor="#D6EAF8">
-
-<h3>Objetos metálicos</h3>
-
-<p>
-Tornillos, tuercas, piezas metálicas y herramientas.
-</p>
-
-</td>
-
-
-<td align="center" bgcolor="#D5F5E3">
-
-<h3>Residuos</h3>
-
-<p>
-Plásticos, papel, botellas y restos de embalaje.
-</p>
-
-</td>
-
-
-<td align="center" bgcolor="#FCF3CF">
-
-<h3>Superficie</h3>
-
-<p>
-Piedras, fragmentos de pavimento y pedazos de caucho.
-</p>
-
-</td>
-
-</tr>
-
-</table>
-
-</div>
-
-
-<!-- DAÑOS -->
-
-<div style="background-color:white; margin:30px; padding:25px;">
-
-<h2 style="color:#123B5D;">¿Qué daños puede causar?</h2>
-
-<p align="left">
-Los objetos extraños pueden causar daños en los neumáticos de una aeronave.
-</p>
-
-<p align="center">
-También pueden ser absorbidos por los motores.
-</p>
-
-<p align="right">
-Además pueden provocar daños en equipos y retrasos en las operaciones.
-</p>
-
-</div>
-
-
-<!-- PREVENCIÓN -->
-
-<div style="background-color:white; margin:30px; padding:25px;">
-
-<h2 style="color:#123B5D;">Prevención de FOD</h2>
-
-<p>
-1. Mantener las áreas operacionales limpias.
-</p>
-
-<p>
-2. Realizar inspecciones frecuentes.
-</p>
-
-<p>
-3. Recoger objetos extraños encontrados.
-</p>
-
-<p>
-4. Revisar herramientas y equipos después de realizar trabajos.
-</p>
-
-<p>
-5. Reportar cualquier condición que pueda representar un peligro.
-</p>
-
-</div>
-
-
-<!-- MENSAJE FINAL -->
-
-<div style="background-color:#F4D03F; text-align:center; padding:20px; margin:30px;">
-
-<h2>Un pequeño objeto puede causar un gran daño</h2>
-
-<p>
-La prevención del FOD contribuye a mantener operaciones aeroportuarias más seguras.
-</p>
-
-</div>
-
-
-<!-- PIE DE PAGINA -->
-
-<div style="background-color:#123B5D; color:white; text-align:center; padding:15px;">
-
-<p>AeroFOD Panamá - Página educativa de seguridad operacional</p>
-
-</div>
-
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const navLinks = document.getElementById("navLinks");
+  menuBtn.addEventListener("click", () => navLinks.classList.toggle("open"));
+
+  document.querySelectorAll(".nav-links a").forEach(link => {
+    link.addEventListener("click", () => navLinks.classList.remove("open"));
+  });
+
+  document.querySelectorAll(".faq-question").forEach(btn => {
+    btn.addEventListener("click", () => btn.parentElement.classList.toggle("active"));
+  });
+
+  const docSearch = document.getElementById("docSearch");
+  const docs = [...document.querySelectorAll(".doc-card")];
+
+  docSearch.addEventListener("input", e => {
+    const q = e.target.value.toLowerCase().trim();
+    docs.forEach(card => {
+      const text = (card.innerText + " " + card.dataset.keywords).toLowerCase();
+      card.style.display = text.includes(q) ? "flex" : "none";
+    });
+  });
+
+  function openModal(){
+    document.getElementById("queryModal").classList.add("open");
+    setTimeout(() => document.getElementById("quickQuery").focus(), 80);
+  }
+
+  function closeModal(){
+    document.getElementById("queryModal").classList.remove("open");
+  }
+
+  function modalBackdrop(event){
+    if(event.target.id === "queryModal") closeModal();
+  }
+
+  function runQuickQuery(){
+    const q = document.getElementById("quickQuery").value.toLowerCase().trim();
+    const result = document.getElementById("queryResult");
+
+    const answers = [
+      {keys:["fod","objeto","debris"],text:"FOD puede referirse al objeto extraño (Foreign Object Debris) o al daño causado por ese objeto (Foreign Object Damage). Revisa la sección ¿Qué significa FOD?."},
+      {keys:["ave","pájaro","fauna","wildlife"],text:"Las aves se gestionan normalmente como peligro por fauna, no como FOD."},
+      {keys:["racp","reglamento","regla","norma"],text:"El RACP es el Reglamento de Aviación Civil de Panamá. Puedes abrirlo desde la Biblioteca AeroFOD."},
+      {keys:["aip","aeropuerto","aeródromo"],text:"El AIP Panamá contiene información aeronáutica oficial sobre aeródromos, procedimientos y otros datos de interés operacional."},
+      {keys:["motor","ingestión","ingestion"],text:"El FOD puede ser ingerido por motores y causar daños. También puede afectar neumáticos, equipos y personas."},
+      {keys:["prevenir","prevención","control","detectar","retirar"],text:"El enfoque de control FOD se organiza en cuatro etapas: prevenir, detectar, retirar y evaluar."},
+      {keys:["ley","leyes","21","22","23"],text:"La AAC publica las leyes aeronáuticas de Panamá. En la Biblioteca tienes acceso al apartado oficial de leyes."}
+    ];
+
+    let found = answers.find(a => a.keys.some(k => q.includes(k)));
+    result.style.display = "block";
+    result.innerHTML = found
+      ? "<strong>Orientación:</strong> " + found.text
+      : "<strong>No encontré una coincidencia directa.</strong> Prueba con FOD, ave, RACP, AIP, motor, prevención o leyes.";
+  }
+
+  document.addEventListener("keydown", e => {
+    if(e.key === "Escape") closeModal();
+  });
+</script>
 
 </body>
-
 </html>

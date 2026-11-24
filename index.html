@@ -1168,66 +1168,351 @@
       font-size:.8rem;
     }
 
+    
     @media(max-width:930px){
-      .guide-visual,.action-panel{grid-template-columns:1fr}
-      .guide-carousel{min-height:500px}
-    }
+      .container{width:min(var(--max),calc(100% - 30px))}
+      .section{padding:78px 0}
 
-    @media(max-width:650px){
-      .guide-side{grid-template-columns:1fr}
-      .guide-collage{grid-template-columns:1fr}
-      .guide-shell{padding:14px}
-      .guide-carousel{min-height:620px}
-      .action-photo{min-height:230px}
-      .action-content{padding:24px}
-    }
+      .nav-links{
+        display:none;
+        position:absolute;
+        left:16px;
+        right:16px;
+        top:76px;
+        padding:18px;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:14px;
+        background:var(--paper);
+        border:1px solid rgba(10,37,64,.08);
+        border-radius:14px;
+        box-shadow:0 18px 48px rgba(10,37,64,.14);
+      }
 
-    @media(max-width:930px){
-      .guide-visual,.action-panel{grid-template-columns:1fr}
-      .guide-image{min-height:360px}
-    }
+      .nav-links.open{display:flex}
+      .menu-btn{display:block}
+      .nav-cta{display:none}
 
-    @media(max-width:650px){
-      .guide-side{grid-template-columns:1fr}
-      .guide-collage{grid-template-columns:1fr}
-      .guide-shell{padding:14px}
-      .guide-image{min-height:300px}
-      .action-photo{min-height:260px}
-      .action-content{padding:24px}
-    }
+      .hero-grid,
+      .risk-layout,
+      .panama-box,
+      .faq-layout,
+      .about-box,
+      .guide-visual,
+      .action-panel{
+        grid-template-columns:1fr;
+      }
 
-    @media(max-width:930px){
-      .hero-grid,.risk-layout,.panama-box,.faq-layout,.about-box{grid-template-columns:1fr}
+      .hero{
+        padding-top:52px;
+      }
+
       .hero-photo{
-      position:relative;
-      min-height:560px;
-      border-radius:26px;
-      overflow:hidden;
-      box-shadow:0 24px 60px rgba(10,37,64,.16);
-      background:
-        linear-gradient(180deg,rgba(4,18,31,.08),rgba(4,18,31,.36)),
-        url("https://images.unsplash.com/photo-1761813409549-1ba35f7c1fca?auto=format&fit=crop&w=1800&q=92") center/cover no-repeat;
-      border:1px solid rgba(10,37,64,.08);
+        min-height:430px;
+        margin-top:8px;
+      }
+
+      .strip-grid{grid-template-columns:1fr}
+      .cards{grid-template-columns:repeat(2,1fr)}
+      .process{grid-template-columns:repeat(2,1fr)}
+      .doc-grid{grid-template-columns:1fr}
+      .footer-grid{grid-template-columns:1fr 1fr}
+      .faq-intro{position:static}
+      .guide-side{grid-template-columns:repeat(2,1fr)}
+      .guide-carousel{min-height:520px}
+      .action-photo{min-height:280px}
     }
 
     @media(max-width:650px){
-      .container{width:min(100% - 26px,var(--max))}
-      .section{padding:72px 0}
-      .section-head{display:block}
-      .section-head p{margin-top:16px}
-      .cards,.definition-grid,.process,.doc-grid,.footer-grid,.about-side{grid-template-columns:1fr}
-      .hero{padding-top:46px}
+      body{overflow-x:hidden}
+
+      .container{
+        width:calc(100% - 24px);
+      }
+
+      .section{
+        padding:62px 0;
+      }
+
+      h1{
+        font-size:clamp(2.45rem,12vw,3.35rem);
+        letter-spacing:-.045em;
+      }
+
+      h2{
+        font-size:clamp(1.9rem,8.5vw,2.45rem);
+        letter-spacing:-.035em;
+      }
+
+      .lead{
+        font-size:1rem;
+      }
+
+      .section-head{
+        display:block;
+        margin-bottom:30px;
+      }
+
+      .section-head p{
+        margin-top:14px;
+      }
+
+      nav{
+        min-height:70px;
+      }
+
+      .brand{
+        font-size:.98rem;
+      }
+
+      .brand-mark{
+        width:36px;
+        height:36px;
+        border-radius:10px;
+      }
+
+      .nav-links{
+        top:70px;
+      }
+
+      .hero{
+        padding:38px 0 48px;
+      }
+
+      .hero-copy p{
+        margin:20px 0 24px;
+      }
+
+      .hero-actions{
+        margin-bottom:24px;
+      }
+
+      .hero-actions .btn{
+        width:100%;
+      }
+
+      .trust-row{
+        gap:8px;
+      }
+
+      .trust-pill{
+        font-size:.76rem;
+        padding:8px 10px;
+      }
+
       .hero-photo{
-      position:relative;
-      min-height:560px;
-      border-radius:26px;
-      overflow:hidden;
-      box-shadow:0 24px 60px rgba(10,37,64,.16);
-      background:
-        linear-gradient(180deg,rgba(4,18,31,.08),rgba(4,18,31,.36)),
-        url("https://images.unsplash.com/photo-1761813409549-1ba35f7c1fca?auto=format&fit=crop&w=1800&q=92") center/cover no-repeat;
-      border:1px solid rgba(10,37,64,.08);
+        min-height:300px;
+        border-radius:18px;
+      }
+
+      .photo-badge{
+        left:14px;
+        top:14px;
+        font-size:.66rem;
+      }
+
+      .photo-info{
+        left:14px;
+        right:14px;
+        bottom:14px;
+      }
+
+      .photo-card{
+        max-width:100%;
+        padding:12px 14px;
+      }
+
+      .photo-card small{
+        font-size:.66rem;
+      }
+
+      .photo-card strong{
+        font-size:.9rem;
+        line-height:1.35;
+      }
+
+      .definition-grid,
+      .cards,
+      .doc-grid,
+      .footer-grid,
+      .about-side{
+        grid-template-columns:1fr;
+      }
+
+      .process{
+        grid-template-columns:repeat(2,1fr);
+        gap:10px;
+      }
+
+      .step{
+        padding:20px 16px;
+      }
+
+      .step-num{
+        font-size:1.8rem;
+        margin-bottom:14px;
+      }
+
+      .step h3{
+        font-size:1rem;
+      }
+
+      .step p{
+        font-size:.82rem;
+      }
+
+      .card,
+      .definition,
+      .about-card{
+        padding:22px;
+      }
+
+      .definition{
+        min-height:230px;
+      }
+
+      .risk-panel{
+        padding:26px;
+      }
+
+      .about-main,
+      .panama-box,
+      .cta-box{
+        padding:26px;
+      }
+
+      .panama-map{
+        min-height:250px;
+      }
+
+      .guide-shell{
+        padding:12px;
+      }
+
+      .guide-carousel{
+        min-height:560px;
+        border-radius:12px;
+      }
+
+      .guide-collage{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:8px;
+        padding:10px;
+      }
+
+      .fod-thumb{
+        min-height:180px;
+        padding:11px;
+        border-radius:10px;
+      }
+
+      .fod-tag{
+        font-size:.6rem;
+        margin-bottom:5px;
+      }
+
+      .fod-symbol{
+        font-size:1.65rem;
+        margin:4px 0 8px;
+      }
+
+      .fod-thumb strong{
+        font-size:.82rem;
+      }
+
+      .fod-thumb p{
+        font-size:.72rem;
+        line-height:1.35;
+      }
+
+      .guide-image-overlay{
+        min-height:auto;
+        padding:12px 14px;
+      }
+
+      .guide-image-overlay small{
+        font-size:.64rem;
+      }
+
+      .guide-image-overlay strong{
+        font-size:.85rem;
+        line-height:1.35;
+      }
+
+      .guide-controls{
+        top:10px;
+        right:10px;
+      }
+
+      .guide-btn{
+        width:34px;
+        height:34px;
+      }
+
+      .guide-dots{
+        left:10px;
+        top:12px;
+      }
+
+      .guide-hint{
+        display:none;
+      }
+
+      .guide-side{
+        grid-template-columns:1fr;
+      }
+
+      .guide-item{
+        padding:16px;
+      }
+
+      .action-photo{
+        min-height:220px;
+      }
+
+      .action-content{
+        padding:24px 20px;
+      }
+
+      .airport-pills{
+        gap:8px;
+      }
+
+      .airport-pill{
+        font-size:.78rem;
+        padding:8px 10px;
+      }
+
+      .search{
+        max-width:none;
+      }
+
+      .doc-card{
+        padding:18px;
+      }
+
+      .faq-question{
+        padding:18px 0;
+      }
+
+      .cta{
+        padding:50px 0 72px;
+      }
+
+      .cta-box{
+        display:block;
+      }
+
+      .cta-box .btn{
+        margin-top:14px;
+        width:100%;
+      }
+
+      .footer-bottom{
+        line-height:1.5;
+      }
     }
+
   </style>
 </head>
 
@@ -1244,7 +1529,6 @@
 
     <div class="nav-links" id="navLinks">
       <a href="#fod">FOD</a>
-        <a href="#guia-fod">Guía práctica FOD</a>
       <a href="#guia-fod">Guía FOD</a>
       <a href="#prevencion">Prevención</a>
       <a href="#nosotros">Sobre nosotros</a>
